@@ -25,6 +25,7 @@ yarn-error.log
 build/
 dist/
 lib/
+reusable-components-dist/
 transpiled/
 
 # Test Results

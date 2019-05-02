@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { get, omit } from 'lodash';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import Select, { ReactSelectProps } from 'react-select';
 import { ICanaryState } from 'kayenta/reducers';
 import { Typeahead, TypeaheadProps } from 'react-bootstrap-typeahead';
