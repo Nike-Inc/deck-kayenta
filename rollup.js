@@ -1,11 +1,18 @@
-import { existsSync } from 'fs';
-import typescript from 'rollup-plugin-typescript2';
-import postcss from 'rollup-plugin-postcss';
-import pify from 'pify';
-import path from 'path';
-import less from 'less';
-import alias from 'rollup-plugin-alias';
-import importCwd from 'import-cwd';
+const rollup = require('rollup');
+const alias = require('rollup-plugin-alias');
+const commonjs = require('rollup-plugin-commonjs');
+const external = require('rollup-plugin-peer-deps-external');
+const json = require('rollup-plugin-json');
+const postcssPlugin = require('rollup-plugin-postcss');
+const resolve = require('rollup-plugin-node-resolve');
+const sizes = require('rollup-plugin-sizes');
+const typescript = require('rollup-plugin-typescript2');
+const url = require('rollup-plugin-url');
+const pify = require('pify');
+const path = require('path');
+const less = require('less');
+const fs = require('fs');
+const importCwd = require('import-cwd');
 
 const humanlizePath = filepath => path.relative(process.cwd(), filepath);
 const NODE_MODULE_PATH = path.join(__dirname, 'node_modules');
@@ -25,7 +32,6 @@ const lessAliases = {
 
 /**
  * Custom file manager to support webpack style aliases via '~'
- * Inspired by https://github.com/webpack-contrib/less-loader/blob/99aad2171e9784cecef2e7820fb8300698fe7007/src/createWebpackLessPlugin.js#L36
  */
 class RollupFileManager extends less.FileManager {
   constructor(lessAliases) {
@@ -85,7 +91,7 @@ class RollupFileManager extends less.FileManager {
 const rollupFileManager = new RollupFileManager(lessAliases);
 
 // Copy pasted from https://github.com/egoist/rollup-plugin-postcss/blob/5596ca978bee3d5c4da64c8ddd130ca3d8e77244/src/less-loader.js
-// But modified to use the above RollupFileManager
+// But modified to replace ~ in import statements with the node_modules path
 const lessLoader = {
   name: 'less',
   test: /\.less$/,
@@ -120,12 +126,14 @@ const lessLoader = {
   },
 };
 
-const CONFIG = {
-  experimentalCodeSplitting: true,
-  experimentalDynamicImport: true,
-  external: id => existsSync(`./node_modules/${id}`),
-  input: ['src/index.ts'],
-  output: { dir: 'lib', format: 'es', sourcemap: true },
+rollup.rollup({
+  input: 'src/index.ts',
+  treeshake: true,
+  output: {
+    file: 'lib/index.js',
+    format: 'cjs',
+    sourcemap: false,
+  },
   plugins: [
     {
       transform(code, id) {
@@ -136,13 +144,36 @@ const CONFIG = {
       resolve: ['.json', '.js', '.jsx', '.ts', '.tsx', '.css', '.less', '.html'],
       root: __dirname,
     }),
-    typescript({
-      useTsconfigDeclarationDir: true,
+    commonjs({
+      include: 'node_modules/**',
+      namedExports: {
+        'node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js': ['IS_SCROLLING_TIMEOUT'],
+        'node_modules/lodash/lodash.js': ['get', 'omit'],
+        'node_modules/@spinnaker/core/lib/lib.js': [
+          'SETTINGS',
+          'API',
+          'NgReact',
+          'JsonEditor',
+          'JsonUtils',
+          'noop',
+          'HelpField',
+          'ValidationMessage',
+        ],
+      },
     }),
-    postcss({
+    external(),
+    json(),
+    postcssPlugin({
       loaders: [lessLoader],
     }),
+    resolve({
+      preferBuiltins: true,
+    }),
+    sizes(),
+    // This takes soo dang long, #sad-panda
+    typescript({
+      check: false,
+    }),
+    url(),
   ],
-};
-
-export default CONFIG;
+});

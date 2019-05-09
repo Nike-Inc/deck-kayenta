@@ -37,3 +37,5 @@ coverage/
 #gradle wrapper symlinks
 /gradle
 /gradlew
+
+.rpt2_cache

@@ -94,7 +94,7 @@ function configure(IS_TEST, IS_INSTRUMENTED) {
   if (!IS_TEST) {
     config.entry = {
       settings: './settings.js',
-      app: './src/app.ts',
+      app: './src/index.ts',
       vendor: [
         'jquery',
         'angular',
