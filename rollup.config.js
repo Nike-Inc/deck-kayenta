@@ -4,6 +4,7 @@ import postcss from 'rollup-plugin-postcss';
 import pify from 'pify';
 import path from 'path';
 import less from 'less';
+import resolve from 'rollup-plugin-node-resolve';
 import alias from 'rollup-plugin-alias';
 import json from 'rollup-plugin-json';
 import importCwd from 'import-cwd';
@@ -133,6 +134,7 @@ const CONFIG = {
       },
     },
     json(),
+    resolve(),
     alias({
       resolve: ['.json', '.js', '.jsx', '.ts', '.tsx', '.css', '.less', '.html'],
       root: __dirname,
