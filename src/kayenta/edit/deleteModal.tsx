@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Action } from 'redux';
 import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 
 import * as Creators from 'kayenta/actions/creators';
 import { ICanaryState } from '../reducers/index';

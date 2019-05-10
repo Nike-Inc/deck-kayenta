@@ -1,2 +1,3 @@
-export * from 'kayenta/index';
-export * from 'kayenta/initializeAngular';
+export { default as IsolatedCanaryConfigurationEditor } from 'kayenta/edit/IsolatedCanaryConfigurationEditor';
+// export * from 'kayenta'
+// export * from 'kayenta/initializeAngular';

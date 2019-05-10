@@ -1,10 +1,11 @@
 import { existsSync } from 'fs';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from 'rollup-plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import pify from 'pify';
 import path from 'path';
 import less from 'less';
 import alias from 'rollup-plugin-alias';
+import json from 'rollup-plugin-json';
 import importCwd from 'import-cwd';
 
 const humanlizePath = filepath => path.relative(process.cwd(), filepath);
@@ -121,24 +122,22 @@ const lessLoader = {
 };
 
 const CONFIG = {
-  experimentalCodeSplitting: true,
-  experimentalDynamicImport: true,
   external: id => existsSync(`./node_modules/${id}`),
   input: ['src/index.ts'],
   output: { dir: 'lib', format: 'es', sourcemap: true },
+  treeshake: true,
   plugins: [
     {
       transform(code, id) {
         console.log(`Processing: '${id}'`);
       },
     },
+    json(),
     alias({
       resolve: ['.json', '.js', '.jsx', '.ts', '.tsx', '.css', '.less', '.html'],
       root: __dirname,
     }),
-    typescript({
-      useTsconfigDeclarationDir: true,
-    }),
+    typescript(),
     postcss({
       loaders: [lessLoader],
     }),

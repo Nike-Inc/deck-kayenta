@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 
 import { ICanaryState } from '../reducers';
 import * as Creators from '../actions/creators';

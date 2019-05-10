@@ -6,7 +6,8 @@ import { noop } from '@spinnaker/core';
 import { ICanaryMetricConfig } from 'kayenta/domain';
 import { ICanaryState } from 'kayenta/reducers';
 import * as Creators from 'kayenta/actions/creators';
-import { ITableColumn, NativeTable } from 'kayenta/layout/table';
+import { ITableColumn } from '../layout/table/tableColumn';
+import { NativeTable } from '../layout/table/nativeTable';
 import ChangeMetricGroupModal from './changeMetricGroupModal';
 import { DISABLE_EDIT_CONFIG, DisableableButton } from 'kayenta/layout/disableable';
 

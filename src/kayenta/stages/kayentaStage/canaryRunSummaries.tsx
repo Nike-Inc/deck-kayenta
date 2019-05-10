@@ -4,7 +4,8 @@ import { get, has } from 'lodash';
 import { HoverablePopover, CopyToClipboard, IStage, timestamp, ReactInjector } from '@spinnaker/core';
 import { CanaryScore } from 'kayenta/components/canaryScore';
 import Styleguide from 'kayenta/layout/styleguide';
-import { ITableColumn, NativeTable } from 'kayenta/layout/table';
+import { ITableColumn } from '../../layout/table/tableColumn';
+import { NativeTable } from '../../layout/table/nativeTable';
 
 import './canaryRunSummaries.less';
 

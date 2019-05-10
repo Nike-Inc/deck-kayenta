@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import { IsolatedCanaryConfigurationEditor } from '@spinnaker/kayenta/reusable-components';
+import { IsolatedCanaryConfigurationEditor } from '../../../lib/index';
 
 storiesOf('Config Editor', module).add('component', () => {
   return <IsolatedCanaryConfigurationEditor />;

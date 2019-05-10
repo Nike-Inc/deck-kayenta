@@ -11,7 +11,8 @@ import { runSelector, selectedMetricConfigSelector } from 'kayenta/selectors';
 import { ICanaryState } from 'kayenta/reducers';
 import metricStoreConfigStore from 'kayenta/metricStore/metricStoreConfig.service';
 import FormattedDate from 'kayenta/layout/formattedDate';
-import { ITableColumn, NativeTable } from 'kayenta/layout/table';
+import { ITableColumn } from '../../layout/table/tableColumn';
+import { NativeTable } from '../../layout/table/nativeTable';
 
 import './metricResultStats.less';
 

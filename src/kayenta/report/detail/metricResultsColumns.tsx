@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ITableColumn } from 'kayenta/layout/table';
+import { ITableColumn } from 'kayenta/layout/table/tableColumn';
 import { IMetricResultsTableRow } from './metricResultsList';
 import MetricResultClassification from './metricResultClassification';
 import MetricResultDeviation from './metricResultDeviation';

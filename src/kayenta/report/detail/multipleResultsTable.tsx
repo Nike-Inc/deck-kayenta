@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { chain } from 'lodash';
 import { connect, Dispatch } from 'react-redux';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 
 import { ICanaryAnalysisResult } from 'kayenta/domain/ICanaryJudgeResult';
-import { ITableColumn, Table } from 'kayenta/layout/table';
+import { ITableColumn } from '../../layout/table/tableColumn';
+import { Table } from '../../layout/table/table';
 import { ICanaryState } from 'kayenta/reducers';
 import { selectedMetricResultIdSelector } from 'kayenta/selectors';
 import * as Creators from 'kayenta/actions/creators';

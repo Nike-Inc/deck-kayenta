@@ -17,11 +17,11 @@ templates.keys().forEach(function(key) {
   templates(key);
 });
 
-const modules = [CANARY_COMPONENTS, CANARY_DATA_SOURCE, CANARY_STATES];
+const modules = [CANARY_COMPONENTS];
 
 export const KAYENTA_MODULE = 'spinnaker.kayenta';
-if (CanarySettings.featureDisabled) {
-  module(KAYENTA_MODULE, []);
-} else {
-  module(KAYENTA_MODULE, CanarySettings.stagesEnabled ? [CANARY_STAGES, ...modules] : modules);
-}
+// if (CanarySettings.featureDisabled) {
+//   // module(KAYENTA_MODULE, []);
+// } else {
+//   // module(KAYENTA_MODULE, CanarySettings.stagesEnabled ? [CANARY_STAGES, ...modules] : modules);
+// }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import { connect, Dispatch } from 'react-redux';
 
 import { ICanaryJudgeGroupScore } from 'kayenta/domain/ICanaryJudgeResult';

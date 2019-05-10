@@ -6,7 +6,8 @@ import { isEqual, get } from 'lodash';
 import { Application } from '@spinnaker/core';
 
 import { CanarySettings } from 'kayenta/canary.settings';
-import { ITableColumn, NativeTable } from 'kayenta/layout/table';
+import { ITableColumn } from '../../layout/table/tableColumn';
+import { NativeTable } from '../../layout/table/nativeTable';
 import { ICanaryState } from 'kayenta/reducers';
 import {
   ICanaryExecutionStatusResult,
