@@ -7,6 +7,7 @@ import less from 'less';
 import resolve from 'rollup-plugin-node-resolve';
 import alias from 'rollup-plugin-alias';
 import json from 'rollup-plugin-json';
+import commonjs from 'rollup-plugin-commonjs';
 import importCwd from 'import-cwd';
 
 const humanlizePath = filepath => path.relative(process.cwd(), filepath);
@@ -123,9 +124,14 @@ const lessLoader = {
 };
 
 const CONFIG = {
-  external: id => existsSync(`./node_modules/${id}`),
+  external: id => {
+    if (id.startsWith('@spinnaker')) {
+      return false;
+    }
+    return existsSync(`./node_modules/${id}`);
+  },
   input: ['src/index.ts'],
-  output: { dir: 'lib', format: 'es', sourcemap: true },
+  output: { name: 'kayenta', file: 'lib/index.js', format: 'es', sourcemap: true },
   treeshake: true,
   plugins: [
     {
@@ -135,6 +141,21 @@ const CONFIG = {
     },
     json(),
     resolve(),
+    commonjs({
+      include: ['node_modules/@spinnaker/**'],
+      namedExports: {
+        'node_modules/@spinnaker/core/lib/lib.js': [
+          'SETTINGS',
+          'API',
+          'NgReact',
+          'JsonEditor',
+          'JsonUtils',
+          'noop',
+          'HelpField',
+          'ValidationMessage',
+        ],
+      },
+    }),
     alias({
       resolve: ['.json', '.js', '.jsx', '.ts', '.tsx', '.css', '.less', '.html'],
       root: __dirname,
