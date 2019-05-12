@@ -2,6 +2,9 @@
   "buildOnSave": false,
   "compileOnSave": true,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true, // https://github.com/rollup/rollup-plugin-typescript/issues/68
+    "declaration": true,
+    "declarationDir": "./lib",
     "allowJs": false,
     "baseUrl": "src",
     "emitDecoratorMetadata": true,

@@ -107,7 +107,7 @@ const CONFIG = {
     );
   },
   input: ['src/index.ts'],
-  output: { name: 'kayenta', file: 'lib/index.js', format: 'es', sourcemap: true },
+  output: { name: 'kayenta', file: 'lib/lib.js', format: 'es', sourcemap: true },
   treeshake: true,
   plugins: [
     {

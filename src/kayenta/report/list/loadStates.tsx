@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ICanaryState } from 'kayenta/reducers';
 import { AsyncRequestState } from 'kayenta/reducers/asyncRequest';
 import LoadStatesBuilder from 'kayenta/components/loadStates';
-import ExecutionListTable from './table';
+import ExecutionListTable from './executionListTable';
 import CenteredDetail from 'kayenta/layout/centeredDetail';
 
 interface IExecutionListLoadStatesStateProps {

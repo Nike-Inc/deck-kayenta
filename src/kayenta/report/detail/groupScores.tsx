@@ -6,10 +6,10 @@ import { ICanaryJudgeGroupScore } from 'kayenta/domain/ICanaryJudgeResult';
 import { ICanaryClassifierThresholdsConfig } from '../../domain';
 import ClickableHeader from './clickableHeader';
 import * as Creators from 'kayenta/actions/creators';
-import { ICanaryState } from 'kayenta/reducers/index';
+import { ICanaryState } from 'kayenta/reducers';
 import { IGroupWeights } from 'kayenta/domain/ICanaryConfig';
 import { serializedGroupWeightsSelector, serializedCanaryConfigSelector } from 'kayenta/selectors';
-import { mapGroupToColor } from './colors';
+import { mapGroupToColor } from 'kayenta/report/detail/colors';
 
 export interface IGroupScoresOwnProps {
   groups: ICanaryJudgeGroupScore[];

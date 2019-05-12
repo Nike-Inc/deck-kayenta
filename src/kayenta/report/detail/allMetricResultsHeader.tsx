@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { ICanaryJudgeScore, ICanaryClassifierThresholdsConfig } from 'kayenta/domain';
-import { mapGroupToColor } from './colors';
+import { mapGroupToColor } from 'kayenta/report/detail/colors';
 
 import HeaderArrow from './headerArrow';
 

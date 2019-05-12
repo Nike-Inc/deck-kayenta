@@ -1,6 +1,6 @@
 {
   "main": "lib/lib.js",
-  "typings": "lib/kayenta/index.d.ts",
+  "typings": "lib/src/index.d.ts",
   "name": "@spinnaker/kayenta",
   "version": "0.0.74",
   "license": "Apache-2.0",
@@ -24,7 +24,7 @@
     "prepublishOnly": "npm run lib",
     "lib": "rimraf lib && node ./node_modules/webpack/bin/webpack.js --config ./build_scripts/webpack.build.js",
     "format": "prettier --write 'src/**/*.{ts,tsx,less}'",
-    "rollup": "rimraf lib && node node_modules/rollup/bin/rollup -c rollup.config.js",
+    "rollup": "rimraf lib && node node_modules/rollup/bin/rollup -c rollup.config.js && tsc",
     "rollup-watch": "node node_modules/rollup/bin/rollup -c rollup.config.js -w",
     "storybook": "cd storybook && yarn && yarn storybook",
     "build-storybook": "cd storybook && yarn && yarn build-storybook"
