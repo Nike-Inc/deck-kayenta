@@ -5,6 +5,7 @@ const pify = require('pify');
 const path = require('path');
 const less = require('less');
 const importCwd = require('import-cwd');
+import { minify } from 'html-minifier';
 
 const humanlizePath = filepath => path.relative(process.cwd(), filepath);
 const NODE_MODULE_PATH = path.join(__dirname, 'node_modules');
@@ -96,13 +97,21 @@ const lessLoader = {
 
 const CONFIG = {
   external: id => {
-    return existsSync(`./node_modules/${id}`);
+    return (
+      existsSync(`./node_modules/${id}`) ||
+      [
+        // Manually add ext libs that make it through
+        'brace/mode/json',
+        'brace/ext/searchbox',
+      ].includes(id)
+    );
   },
   input: ['src/index.ts'],
   output: { name: 'kayenta', file: 'lib/index.js', format: 'es', sourcemap: true },
   treeshake: true,
   plugins: [
     {
+      // LOGGING PLUGIN
       transform(code, id) {
         console.log(`Processing: '${id}'`);
       },
@@ -111,6 +120,17 @@ const CONFIG = {
     postcss({
       loaders: [lessLoader],
     }),
+    {
+      // HTML TEMPLATE PLUGIN
+      transform(code, id) {
+        if (id.endsWith('.html')) {
+          return {
+            code: `export default ${JSON.stringify(minify(code, {}))}`,
+            map: { mappings: '' },
+          };
+        }
+      },
+    },
   ],
 };
 
