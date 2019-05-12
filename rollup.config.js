@@ -1,14 +1,10 @@
-import { existsSync } from 'fs';
-import typescript from 'rollup-plugin-typescript';
-import postcss from 'rollup-plugin-postcss';
-import pify from 'pify';
-import path from 'path';
-import less from 'less';
-import resolve from 'rollup-plugin-node-resolve';
-import alias from 'rollup-plugin-alias';
-import json from 'rollup-plugin-json';
-import commonjs from 'rollup-plugin-commonjs';
-import importCwd from 'import-cwd';
+const { existsSync } = require('fs');
+const typescript = require('rollup-plugin-typescript');
+const postcss = require('rollup-plugin-postcss');
+const pify = require('pify');
+const path = require('path');
+const less = require('less');
+const importCwd = require('import-cwd');
 
 const humanlizePath = filepath => path.relative(process.cwd(), filepath);
 const NODE_MODULE_PATH = path.join(__dirname, 'node_modules');
@@ -27,65 +23,39 @@ const lessAliases = {
 };
 
 /**
+ * Replaces aliases in less code then replaces ~ to node_modules root
+ * @param code
+ * @return {*}
+ */
+const replaceAliases = code => {
+  Object.keys(lessAliases).forEach(alias => {
+    code = code.replace(new RegExp(`(@import.*?)["']~${alias}.*?["']`, 'g'), `$1"${lessAliases[alias]}"`);
+  });
+  code = code.replace(/(@import.*?)["']~(.*?)["'].*?/g, `$1"${NODE_MODULE_PATH}/$2"`);
+  return code;
+};
+
+/**
  * Custom file manager to support webpack style aliases via '~'
  * Inspired by https://github.com/webpack-contrib/less-loader/blob/99aad2171e9784cecef2e7820fb8300698fe7007/src/createWebpackLessPlugin.js#L36
  */
 class RollupFileManager extends less.FileManager {
-  constructor(lessAliases) {
-    super();
-    this._lessAliases = lessAliases;
+  supports() {
+    return true;
   }
 
-  supports(filename) {
-    if (filename && filename.startsWith('~')) {
-      return true;
-    }
+  supportsSync() {
     return false;
   }
 
-  supportsSync(filename) {
-    if (filename && filename.startsWith('~')) {
-      return true;
-    }
-    return false;
-  }
-
-  loadFile(filename, currentDirectory, options, environment, callback) {
-    const prefix = filename
-      .replace('~', '')
-      .replace('.less', '')
-      .split('/')[0];
-
-    const filesToCheck = [];
-
-    if (this._lessAliases[prefix]) {
-      filesToCheck.push(
-        filename
-          .substr(1, filename.length)
-          .replace(prefix, this._lessAliases[prefix])
-          .replace('.less.less', '.less'),
-      ); // if the alias is absolute
-    }
-
-    filesToCheck.push(NODE_MODULE_PATH + '/' + filename.replace('~', ''));
-
-    for (let i = 0; i < filesToCheck.length; i++) {
-      const fileToCheck = filesToCheck[i];
-      if (fs.existsSync(fileToCheck)) {
-        return {
-          contents: fs.readFileSync(fileToCheck).toString('utf-8'),
-          filename: filesToCheck,
-        };
-      }
-    }
-
-    const errMsg = "'" + filename + "' wasn't found. Tried - " + filesToCheck.join(',');
-    console.error(errMsg);
-    callback(new Error(errMsg), null);
+  async loadFile(filename, currentDirectory, options, environment) {
+    const file = await super.loadFile(filename, currentDirectory, options, environment);
+    file.contents = replaceAliases(file.contents);
+    return file;
   }
 }
 
-const rollupFileManager = new RollupFileManager(lessAliases);
+const rollupFileManager = new RollupFileManager();
 
 // Copy pasted from https://github.com/egoist/rollup-plugin-postcss/blob/5596ca978bee3d5c4da64c8ddd130ca3d8e77244/src/less-loader.js
 // But modified to use the above RollupFileManager
@@ -93,6 +63,7 @@ const lessLoader = {
   name: 'less',
   test: /\.less$/,
   async process({ code }) {
+    code = replaceAliases(code);
     let { css, map, imports } = await pify(less.render.bind(importCwd('less')))(code, {
       ...this.options,
       sourceMap: this.sourceMap && {},
@@ -125,9 +96,6 @@ const lessLoader = {
 
 const CONFIG = {
   external: id => {
-    if (id.startsWith('@spinnaker')) {
-      return false;
-    }
     return existsSync(`./node_modules/${id}`);
   },
   input: ['src/index.ts'],
@@ -139,27 +107,6 @@ const CONFIG = {
         console.log(`Processing: '${id}'`);
       },
     },
-    json(),
-    resolve(),
-    commonjs({
-      include: ['node_modules/@spinnaker/**'],
-      namedExports: {
-        'node_modules/@spinnaker/core/lib/lib.js': [
-          'SETTINGS',
-          'API',
-          'NgReact',
-          'JsonEditor',
-          'JsonUtils',
-          'noop',
-          'HelpField',
-          'ValidationMessage',
-        ],
-      },
-    }),
-    alias({
-      resolve: ['.json', '.js', '.jsx', '.ts', '.tsx', '.css', '.less', '.html'],
-      root: __dirname,
-    }),
     typescript(),
     postcss({
       loaders: [lessLoader],
