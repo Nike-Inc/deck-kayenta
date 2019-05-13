@@ -668,6 +668,11 @@
     d3-interpolate "^1.1.3"
     preact "^7.2.0"
 
+"@yelo/rollup-node-external@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@yelo/rollup-node-external/-/rollup-node-external-1.0.1.tgz#f1cdc322f757c7e31008c91ea33329c6f5c9c728"
+  integrity sha512-3iYLKFECbISvItw3Sv2cDVSDI64QdthhKcHEmzWawp27KL/0qXWYPBnSkTnqybFoJ4mNjqjs9HuO52d5DZHjbw==
+
 JSONStream@^1.0.3:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-1.3.2.tgz#c102371b6ec3a7cf3b847ca00c20bb0fce4c6dea"

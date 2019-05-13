@@ -121,6 +121,7 @@
     "@types/webpack-env": "^1.13.0",
     "@uirouter/rx": "0.4.5",
     "@uirouter/visualizer": "^4.0.2",
+    "@yelo/rollup-node-external": "^1.0.1",
     "angular-cache": "^4.6.0",
     "angular-cron-gen": "0.0.21",
     "angular-messages": "~1.6.3",
