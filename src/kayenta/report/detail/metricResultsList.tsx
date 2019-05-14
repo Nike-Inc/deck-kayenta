@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 
 import { ICanaryAnalysisResult } from 'kayenta/domain/ICanaryJudgeResult';
 import { ICanaryState } from 'kayenta/reducers';

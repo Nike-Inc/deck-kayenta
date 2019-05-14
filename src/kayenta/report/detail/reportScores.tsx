@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect, Dispatch } from 'react-redux';
 import { sortBy } from 'lodash';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 
 import { ICanaryJudgeGroupScore, ICanaryJudgeScore, ICanaryScoreThresholds } from 'kayenta/domain';
 import { ICanaryState } from 'kayenta/reducers';

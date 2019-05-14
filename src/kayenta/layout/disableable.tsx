@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { get, omit } from 'lodash';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import Select, { ReactSelectProps } from 'react-select';
 import { ICanaryState } from 'kayenta/reducers';
 import { Typeahead, TypeaheadProps } from 'react-bootstrap-typeahead';
+
+// todo, typescript is all kinds of angry at this file
 
 // Well-known keys that flag if a component should be disabled.
 export const DISABLE_EDIT_CONFIG = 'app.disableConfigEdit';
@@ -33,6 +35,7 @@ function disableable<T extends IDisableable>(Component: React.SFC<T>) {
 
     // Would use object spread except for weird interaction with TS generics.
     const otherProps = omit(props, ['disabled', 'disabledBecauseOfState', 'disabledStateKeys', 'dispatch']);
+    // @ts-ignore
     return <Component {...otherProps} disabled={disabled || disabledBecauseOfState} />;
   });
 }

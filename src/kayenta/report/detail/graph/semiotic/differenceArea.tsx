@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { scaleUtc } from 'd3-scale';
 import { XYFrame } from 'semiotic';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 import { curveStepAfter } from 'd3-shape';
 
 import { ISemioticChartProps, IMargin } from './semiotic.service';

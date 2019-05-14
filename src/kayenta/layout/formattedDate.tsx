@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 
 import { SETTINGS } from '@spinnaker/core';
 

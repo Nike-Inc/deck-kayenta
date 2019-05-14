@@ -14,6 +14,8 @@ import { KAYENTA_STAGE_EXECUTION_DETAILS_CONTROLLER } from './kayentaStageExecut
 import { KAYENTA_STAGE_CONFIG_SECTION } from './kayentaStageConfigSection.component';
 import { KAYENTA_ANALYSIS_TYPE_COMPONENT } from './analysisType.component';
 import { FOR_ANALYSIS_TYPE_COMPONENT } from './forAnalysisType.component';
+import kayentaStageTemplate from './kayentaStage.html';
+import kayentaStageExecutionDetails from './kayentaStageExecutionDetails.html';
 
 const isExpression = (value: string) => isString(value) && value.includes('${');
 
@@ -88,10 +90,10 @@ module(KAYENTA_CANARY_STAGE, [
       label: CanarySettings.stageName || 'Canary Analysis',
       description: CanarySettings.stageDescription || 'Runs a canary task',
       key: 'kayentaCanary',
-      templateUrl: require('./kayentaStage.html'),
+      templateUrl: kayentaStageTemplate,
       controller: 'KayentaCanaryStageCtrl',
       controllerAs: 'kayentaCanaryStageCtrl',
-      executionDetailsUrl: require('./kayentaStageExecutionDetails.html'),
+      executionDetailsUrl: kayentaStageExecutionDetails,
       executionLabelComponent: CanaryExecutionLabel,
       validators: [
         { type: 'requiredField', fieldName: 'canaryConfig.canaryConfigId', fieldLabel: 'Config Name' },

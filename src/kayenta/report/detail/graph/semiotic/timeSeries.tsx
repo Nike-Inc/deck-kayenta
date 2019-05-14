@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { scaleUtc } from 'd3-scale';
 import { MinimapXYFrame, XYFrame, IXYFrameProps, IMinimapProps, IXYFrameHoverBaseArgs } from 'semiotic';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 import { SETTINGS } from '@spinnaker/core';
 const { defaultTimeZone } = SETTINGS;
 import { curveStepAfter } from 'd3-shape';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import { chain } from 'lodash';
 
 import { IMetricSetPair } from 'kayenta/domain/IMetricSetPair';

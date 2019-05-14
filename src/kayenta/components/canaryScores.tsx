@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { isString } from 'lodash';
 import autoBindMethods from 'class-autobind-decorator';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 
 import { HelpField } from '@spinnaker/core';
 

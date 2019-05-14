@@ -1,5 +1,5 @@
 import { format } from 'd3-format';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 import { scaleUtc } from 'd3-scale';
 import { quantile } from 'd3-array';
 import { ISummaryStatistics } from './semiotic.service';
